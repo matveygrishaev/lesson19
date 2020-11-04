@@ -58,5 +58,51 @@ window.addEventListener('DOMContentLoaded', function(){
 
         idInterval = setInterval(updateClock, 1000);
     }
+
     countTimer('03 november 2020 23:32:20');
+
+    //Menu
+
+    const toggleMenu = () => {
+        const btnMenu = document.querySelector('.menu'), // кнопка бургер, открывает и закрывает меню
+            menu = document.querySelector('menu'), // скрытое, с помощью translate(-100%) меню
+            closeBtn = document.querySelector('.close-btn'), // кнопка "крестик" в меню 
+            menuItems = menu.querySelectorAll('ul>li'), // список ссылок в выпадающем меню
+
+            handlerMenu = () => {
+                menu.classList.toggle('active-menu');
+            };
+
+        // Кнопка-бургер меню, открыть и закрыть
+        btnMenu.addEventListener('click', handlerMenu);
+
+        // Кнопка "крестик", закрывает меню
+        closeBtn.addEventListener('click', handlerMenu);
+        
+        // Навешать прослушиватель всем элементам выпадающего меню
+        menuItems.forEach((elem) => {elem.addEventListener('click', handlerMenu);});
+    };
+
+    toggleMenu();
+
+    //PopUp окно
+
+    const togglePopUp = () => {
+        const popUp = document.querySelector('.popup'),
+        popUpBtns = document.querySelectorAll('.popup-btn'),
+        popUpClose = document.querySelector('.popup-close');
+
+        popUpBtns.forEach((elem) => {
+            elem.addEventListener('click', () => {
+              popUp.style.display = 'block';
+            });
+        });
+
+        popUpClose.addEventListener('click', () => {
+            popUp.style.display = 'none';
+        });
+
+    };
+
+    togglePopUp();
 });
