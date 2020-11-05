@@ -67,7 +67,7 @@ window.addEventListener('DOMContentLoaded', function(){
         const btnMenu = document.querySelector('.menu'), // кнопка бургер, открывает и закрывает меню
             menu = document.querySelector('menu'), // скрытое, с помощью translate(-100%) меню
             closeBtn = document.querySelector('.close-btn'), // кнопка "крестик" в меню 
-            menuItems = menu.querySelectorAll('ul>li'), // список ссылок в выпадающем меню
+            menuItems = menu.querySelectorAll('ul>li>a'), // список ссылок в выпадающем меню
 
             handlerMenu = () => {
                 menu.classList.toggle('active-menu');
@@ -89,20 +89,47 @@ window.addEventListener('DOMContentLoaded', function(){
 
     const togglePopUp = () => {
         const popUp = document.querySelector('.popup'),
+        popUpContent = document.querySelector('.popup-content'),
         popUpBtns = document.querySelectorAll('.popup-btn'),
         popUpClose = document.querySelector('.popup-close');
 
-        popUpBtns.forEach((elem) => {
+        //Навешивает всем popUpBtns display block по клику
+        popUpBtns.forEach(elem => {
             elem.addEventListener('click', () => {
-              popUp.style.display = 'block';
+                popUp.style.display = 'block';
+
+                if (window.innerWidth > 768) {
+                    popUpContent.style.opacity = '0';
+                    let popUpOpenAnimation
+                } else {
+                    popUpContent.style.display = 'block';
+
+                }
+                };
             });
         });
 
         popUpClose.addEventListener('click', () => {
-            popUp.style.display = 'none';
+            if (window.innerWidth > 768) {
+                let x = 1;
+                const timer = setInterval(() => {
+                    x -= 0.1;
+                    popUpContent.style.opacity = `${x}`;
+                    if (popUpContent.style.opacity === "-0.1") {
+                        clearInterval(timer);
+                        popUp.style.display = "none";
+                    }
+                }, 1);
+            } else {
+                popUp.style.display = "none";
+            }
         });
-
     };
 
     togglePopUp();
-});
+
+    console.log(Date.now());
+    console.log(performance.now());
+    console.log(window.innerWidth);
+    }
+);
