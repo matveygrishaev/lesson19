@@ -96,40 +96,36 @@ window.addEventListener('DOMContentLoaded', function(){
         //Навешивает всем popUpBtns display block по клику
         popUpBtns.forEach(elem => {
             elem.addEventListener('click', () => {
+              if(window.innerWidth > 768) {
+                let count = 0;
+                popUpContent.style.opacity = 0;
+                console.log(popUpContent.style.opacity);
                 popUp.style.display = 'block';
 
-                if (window.innerWidth > 768) {
-                    popUpContent.style.opacity = '0';
-                    let popUpOpenAnimation
+                setInterval(() => {
+                    if (popUpContent.style.opacity < 1) {
+                        count += 0.04;
+                        popUpContent.style.opacity = count;
+                    } else {
+                        clearInterval();
+                    }
+                }, 40);
                 } else {
-                    popUpContent.style.display = 'block';
-
+                    popUp.style.display = 'block';
                 }
-                };
             });
         });
 
         popUpClose.addEventListener('click', () => {
-            if (window.innerWidth > 768) {
-                let x = 1;
-                const timer = setInterval(() => {
-                    x -= 0.1;
-                    popUpContent.style.opacity = `${x}`;
-                    if (popUpContent.style.opacity === "-0.1") {
-                        clearInterval(timer);
-                        popUp.style.display = "none";
-                    }
-                }, 1);
-            } else {
-                popUp.style.display = "none";
-            }
+            popUp.style.display = 'none';
+            
         });
+        
+        let a = popUpContent.style.opacity;
+        console.log(window.innerWidth);
+        console.log(typeof a);
     };
 
     togglePopUp();
 
-    console.log(Date.now());
-    console.log(performance.now());
-    console.log(window.innerWidth);
-    }
-);
+});
