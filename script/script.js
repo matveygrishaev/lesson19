@@ -22,26 +22,23 @@ window.addEventListener('DOMContentLoaded', function(){
         function updateClock () {
           let timer = getTimeRemaining();
 
+          const timeCheck = (element1, element2) => {
+              if (String(element1).length === 1) {
+                element2.textContent = '0' + element1;
+              } else {
+                element2.textContent = element1;
+              }
+          };
+
+
           //Часы
-          if (String(timer.hours).length === 1){
-            timerHours.textContent = '0' + timer.hours;
-          } else {
-            timerHours.textContent = timer.hours;
-          }
+          timeCheck(timer.hours, timerHours);
 
           //Минуты
-          if (String(timer.minutes).length === 1){
-            timerMinutes.textContent = '0' + timer.minutes;
-          } else {
-            timerMinutes.textContent = timer.minutes;
-          }
+          timeCheck(timer.minutes, timerMinutes);
 
           // Секунды
-          if (String(timer.seconds).length === 1){
-            timerSeconds.textContent = '0' + timer.seconds;
-          } else {
-            timerSeconds.textContent = timer.seconds;
-          }
+          timeCheck(timer.seconds, timerSeconds);
 
           if (timer.timeRemaining < 0) {
               clearInterval(idInterval);
@@ -56,10 +53,12 @@ window.addEventListener('DOMContentLoaded', function(){
           }
         } // получаем и записываем значения seconds, minutes, hours
 
+        updateClock();
+
         idInterval = setInterval(updateClock, 1000);
     }
 
-    countTimer('03 november 2020 23:32:20');
+    countTimer('07 november 2020 23:32:20');
 
     //Menu
 
@@ -93,7 +92,7 @@ window.addEventListener('DOMContentLoaded', function(){
         popUpBtns = document.querySelectorAll('.popup-btn'),
         popUpClose = document.querySelector('.popup-close');
 
-        //Навешивает всем popUpBtns display block по клику
+        //Навешивает всем popUpBtns display block по клику + анимация Opacity
         popUpBtns.forEach(elem => {
             elem.addEventListener('click', () => {
               if(window.innerWidth > 768) {
@@ -101,7 +100,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 popUpContent.style.opacity = 0;
                 console.log(popUpContent.style.opacity);
                 popUp.style.display = 'block';
-
+                
                 setInterval(() => {
                     if (popUpContent.style.opacity < 1) {
                         count += 0.04;
@@ -116,6 +115,7 @@ window.addEventListener('DOMContentLoaded', function(){
             });
         });
 
+        //Кнопка "закрыть popUp"
         popUpClose.addEventListener('click', () => {
             popUp.style.display = 'none';
             
